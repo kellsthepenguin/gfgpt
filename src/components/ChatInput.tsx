@@ -4,6 +4,8 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
 export default function ChatInput({
   setMessages,
+  isAI,
+  setIsAI,
 }: {
   setMessages: Dispatch<
     SetStateAction<
@@ -13,6 +15,8 @@ export default function ChatInput({
       }[]
     >
   >
+  isAI: boolean
+  setIsAI: Dispatch<SetStateAction<boolean>>
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isSelf, setIsSelf] = useState(false)
@@ -29,23 +33,34 @@ export default function ChatInput({
 
   return (
     <div className='self-start w-full bottom-0 mt-auto'>
-      <input
-        type='radio'
-        id='lover'
-        value='lover'
-        name='sender'
-        onChange={() => setIsSelf(false)}
-        defaultChecked
-      />
-      <label htmlFor='lover'>&nbsp;상대방&nbsp;</label>
-      <input
-        type='radio'
-        id='self'
-        value='self'
-        name='sender'
-        onChange={() => setIsSelf(true)}
-      />
-      <label htmlFor='self'>&nbsp;본인</label>
+      <div className='ml-5 flex justify-start'>
+        <input
+          type='radio'
+          id='lover'
+          value='lover'
+          name='sender'
+          onChange={() => setIsSelf(false)}
+          defaultChecked
+        />
+        <label htmlFor='lover'>&nbsp;상대방&nbsp;</label>
+        <input
+          type='radio'
+          id='self'
+          value='self'
+          name='sender'
+          onChange={() => setIsSelf(true)}
+        />
+        <label htmlFor='self' className='mr-2'>
+          &nbsp;본인
+        </label>
+        <button
+          className='bg-emerald-400 px-3 py-0.5 rounded text-white'
+          style={isAI ? { display: 'none' } : undefined}
+          onClick={() => setIsAI(true)}
+        >
+          Start AI
+        </button>
+      </div>
       <div className='pt-2 p-5 flex gap-2 items-center'>
         <input
           className={
@@ -58,7 +73,7 @@ export default function ChatInput({
         <FontAwesomeIcon
           icon={faPaperPlane}
           className='w-[25px] h-[25px]'
-          color='#3b82f6'
+          color={isAI ? '#34d399' : '#3b82f6'}
           onClick={handleSendEvent}
         />
       </div>

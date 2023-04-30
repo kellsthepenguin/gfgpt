@@ -9,6 +9,7 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<
     { isSelf: boolean; message: string }[]
   >([])
+  const [isAI, setIsAI] = useState(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -29,10 +30,17 @@ export default function ChatBox() {
           id='male'
           value='male'
           name='gender'
+          disabled={isAI}
           defaultChecked
         />
         <label htmlFor='male'>남자</label>
-        <input type='radio' id='female' value='female' name='gender' />
+        <input
+          type='radio'
+          id='female'
+          value='female'
+          name='gender'
+          disabled={isAI}
+        />
         <label htmlFor='female'>여자)</label>
       </div>
 
@@ -43,7 +51,7 @@ export default function ChatBox() {
         <div ref={messagesEndRef} />
       </div>
 
-      <ChatInput setMessages={setMessages} />
+      <ChatInput isAI={isAI} setIsAI={setIsAI} setMessages={setMessages} />
     </div>
   )
 }
