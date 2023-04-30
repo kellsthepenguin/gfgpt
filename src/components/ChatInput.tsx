@@ -24,10 +24,8 @@ export default function ChatInput({
     isSelf: boolean
     message: string
   }) => setMessages((messages) => [...messages, { isSelf, message }])
-  const handleSendEvent = () => {
-    console.log(isSelf)
+  const handleSendEvent = () =>
     sendNonAIMessage({ message: inputRef.current!.value!, isSelf })
-  }
 
   return (
     <div className='self-start w-full bottom-0 mt-auto'>
@@ -36,10 +34,7 @@ export default function ChatInput({
         id='lover'
         value='lover'
         name='sender'
-        onChange={() => {
-          setIsSelf(false)
-          console.log('asdfasdf')
-        }}
+        onChange={() => setIsSelf(false)}
         defaultChecked
       />
       <label htmlFor='lover'>&nbsp;상대방&nbsp;</label>
@@ -48,10 +43,7 @@ export default function ChatInput({
         id='self'
         value='self'
         name='sender'
-        onChange={() => {
-          setIsSelf(true)
-          console.log('aaas')
-        }}
+        onChange={() => setIsSelf(true)}
       />
       <label htmlFor='self'>&nbsp;본인</label>
       <div className='pt-2 p-5 flex gap-2 items-center'>
