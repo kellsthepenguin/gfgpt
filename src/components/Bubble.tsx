@@ -1,14 +1,14 @@
 export default function Bubble({
-  self,
+  isSelf,
   message,
 }: {
-  self: boolean
+  isSelf: boolean
   message: string
 }) {
   return (
     <p
-      className={`${self ? 'mr-auto' : 'ml-auto'} p-2 rounded-md`}
-      style={{ backgroundColor: self ? '#fef01b' : '#ffffff' }}
+      className={`${isSelf ? 'mr-auto' : 'ml-auto'} p-2 rounded-md`}
+      style={{ backgroundColor: isSelf ? '#ffffff' : '#fef01b' }}
     >
       {message}
     </p>
