@@ -7,8 +7,8 @@ export default function Bubble({
 }) {
   return (
     <p
-      className={`${isSelf ? 'mr-auto' : 'ml-auto'} p-2 rounded-md`}
-      style={{ backgroundColor: isSelf ? '#ffffff' : '#fef01b' }}
+      className={`${isSelf ? 'ml-auto' : 'mr-auto'} p-2 rounded-md`}
+      style={{ backgroundColor: isSelf ? '#fef01b' : '#ffffff' }}
     >
       {message}
     </p>
