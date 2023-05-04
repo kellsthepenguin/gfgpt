@@ -28,35 +28,43 @@ export default function ChatInput({
     isSelf: boolean
     message: string
   }) => setMessages((messages) => [...messages, { isSelf, message }])
-  const handleSendEvent = () =>
+  const handleSendEvent = () => {
+    if (!inputRef.current!.value) return
     sendNonAIMessage({ message: inputRef.current!.value!, isSelf })
+    inputRef.current!.value = ''
+  }
 
   return (
     <div className='self-start w-full bottom-0 mt-auto'>
       <div className='ml-5 flex justify-start'>
-        <input
-          type='radio'
-          id='lover'
-          value='lover'
-          name='sender'
-          onChange={() => setIsSelf(false)}
-          defaultChecked
-        />
-        <label htmlFor='lover'>&nbsp;상대방&nbsp;</label>
-        <input
-          type='radio'
-          id='self'
-          value='self'
-          name='sender'
-          onChange={() => setIsSelf(true)}
-        />
-        <label htmlFor='self' className='mr-2'>
-          &nbsp;본인
-        </label>
+        <div style={isAI ? { display: 'none' } : undefined}>
+          <input
+            type='radio'
+            id='lover'
+            value='lover'
+            name='sender'
+            onChange={() => setIsSelf(false)}
+            defaultChecked
+          />
+          <label htmlFor='lover'>&nbsp;상대방&nbsp;</label>
+          <input
+            type='radio'
+            id='self'
+            value='self'
+            name='sender'
+            onChange={() => setIsSelf(true)}
+          />
+          <label htmlFor='self' className='mr-2'>
+            &nbsp;본인
+          </label>
+        </div>
         <button
           className='bg-emerald-400 px-3 py-0.5 rounded text-white'
           style={isAI ? { display: 'none' } : undefined}
-          onClick={() => setIsAI(true)}
+          onClick={() => {
+            setIsAI(true)
+            setIsSelf(true)
+          }}
         >
           Start AI
         </button>
