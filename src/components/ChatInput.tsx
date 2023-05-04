@@ -15,13 +15,8 @@ export default function ChatInput({
   const inputRef = useRef<HTMLInputElement>(null)
   const [isSelf, setIsSelf] = useState(false)
 
-  const sendNonAIMessage = ({
-    isSelf,
-    text,
-  }: {
-    isSelf: boolean
-    text: string
-  }) => setMessages((messages) => [...messages, { isSelf, text }])
+  const sendNonAIMessage = (message: Message) =>
+    setMessages((messages) => [...messages, message])
   const handleSendEvent = () => {
     if (!inputRef.current!.value) return
     sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
