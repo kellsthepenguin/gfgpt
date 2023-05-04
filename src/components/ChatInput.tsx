@@ -1,3 +1,4 @@
+import Message from '@/types/Message'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
@@ -7,14 +8,7 @@ export default function ChatInput({
   isAI,
   setIsAI,
 }: {
-  setMessages: Dispatch<
-    SetStateAction<
-      {
-        isSelf: boolean
-        message: string
-      }[]
-    >
-  >
+  setMessages: Dispatch<SetStateAction<Message[]>>
   isAI: boolean
   setIsAI: Dispatch<SetStateAction<boolean>>
 }) {
@@ -23,14 +17,14 @@ export default function ChatInput({
 
   const sendNonAIMessage = ({
     isSelf,
-    message,
+    text,
   }: {
     isSelf: boolean
-    message: string
-  }) => setMessages((messages) => [...messages, { isSelf, message }])
+    text: string
+  }) => setMessages((messages) => [...messages, { isSelf, text }])
   const handleSendEvent = () => {
     if (!inputRef.current!.value) return
-    sendNonAIMessage({ message: inputRef.current!.value!, isSelf })
+    sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
     inputRef.current!.value = ''
   }
 

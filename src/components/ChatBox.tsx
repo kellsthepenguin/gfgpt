@@ -3,12 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Bubble from './Bubble'
 import { useEffect, useRef, useState } from 'react'
 import ChatInput from './ChatInput'
+import Message from '@/types/Message'
 
 export default function ChatBox() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const [messages, setMessages] = useState<
-    { isSelf: boolean; message: string }[]
-  >([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [isAI, setIsAI] = useState(false)
 
   const scrollToBottom = () => {
@@ -45,8 +44,8 @@ export default function ChatBox() {
       </div>
 
       <div className='flex flex-col mx-2 mt-3 overflow-auto max-h-[440px]'>
-        {messages.map(({ isSelf, message }) => (
-          <Bubble isSelf={isSelf} message={message} />
+        {messages.map(({ isSelf, text }) => (
+          <Bubble isSelf={isSelf} text={text} />
         ))}
         <div ref={messagesEndRef} />
       </div>
