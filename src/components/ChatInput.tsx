@@ -70,6 +70,9 @@ export default function ChatInput({
           }
           size={35}
           autoComplete='off'
+          onKeyUp={({ key }) => {
+            key === 'Enter' && handleSendEvent()
+          }}
           ref={inputRef}
         />
         <FontAwesomeIcon
