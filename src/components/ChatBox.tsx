@@ -9,6 +9,16 @@ export default function ChatBox() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [isAI, setIsAI] = useState(false)
+  const [isSelf, setIsSelf] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const sendNonAIMessage = (message: Message) =>
+    setMessages((messages) => [...messages, message])
+  const handleSendEvent = () => {
+    if (!inputRef.current!.value) return
+    sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
+    inputRef.current!.value = ''
+  }
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -50,7 +60,13 @@ export default function ChatBox() {
         <div ref={messagesEndRef} />
       </div>
 
-      <ChatInput isAI={isAI} setIsAI={setIsAI} setMessages={setMessages} />
+      <ChatInput
+        isAI={isAI}
+        setIsAI={setIsAI}
+        setIsSelf={setIsSelf}
+        handleSendEvent={handleSendEvent}
+        innerRef={inputRef}
+      />
     </div>
   )
 }

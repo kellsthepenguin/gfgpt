@@ -1,28 +1,20 @@
-import Message from '@/types/Message'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Dispatch, SetStateAction, useRef, useState } from 'react'
+import { Dispatch, RefObject, SetStateAction, useRef } from 'react'
 
 export default function ChatInput({
-  setMessages,
   isAI,
   setIsAI,
+  setIsSelf,
+  handleSendEvent,
+  innerRef,
 }: {
-  setMessages: Dispatch<SetStateAction<Message[]>>
   isAI: boolean
   setIsAI: Dispatch<SetStateAction<boolean>>
+  setIsSelf: Dispatch<SetStateAction<boolean>>
+  handleSendEvent: () => void
+  innerRef: RefObject<HTMLInputElement>
 }) {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [isSelf, setIsSelf] = useState(false)
-
-  const sendNonAIMessage = (message: Message) =>
-    setMessages((messages) => [...messages, message])
-  const handleSendEvent = () => {
-    if (!inputRef.current!.value) return
-    sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
-    inputRef.current!.value = ''
-  }
-
   return (
     <div className='self-start w-full bottom-0 mt-auto'>
       <div className='ml-5 flex justify-start'>
@@ -68,7 +60,7 @@ export default function ChatInput({
           onKeyUp={({ key }) => {
             key === 'Enter' && handleSendEvent()
           }}
-          ref={inputRef}
+          ref={innerRef}
         />
         <FontAwesomeIcon
           icon={faPaperPlane}
