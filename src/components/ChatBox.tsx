@@ -10,13 +10,34 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isAI, setIsAI] = useState(false)
   const [isSelf, setIsSelf] = useState(false)
+  const [gender, setGender] = useState('male')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const sendNonAIMessage = (message: Message) =>
     setMessages((messages) => [...messages, message])
+  const sendAIMessage = async (text: string) => {
+    setMessages((messages) => [...messages, { isSelf: true, text }])
+
+    const responseMessage = await (
+      await fetch('/api/ai', {
+        method: 'POST',
+        body: JSON.stringify({
+          gender,
+          messages: [...messages, { isSelf: true, text }],
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    ).json()
+
+    setMessages((messages) => [...messages, responseMessage])
+  }
   const handleSendEvent = () => {
     if (!inputRef.current!.value) return
-    sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
+    isAI
+      ? sendAIMessage(inputRef.current!.value)
+      : sendNonAIMessage({ text: inputRef.current!.value!, isSelf })
     inputRef.current!.value = ''
   }
 
